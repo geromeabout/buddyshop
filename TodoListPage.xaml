@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:Todo"
+             x:Class="Todo.TodoListPage"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             ios:Page.UseSafeArea="True"
+             Title="buddyshop">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="tiImport" Text="Import" Clicked="tiImport_Clicked"/>
+        <ToolbarItem x:Name="tiExport" Text="Export" Clicked="tiExport_Clicked"/>
+    </ContentPage.ToolbarItems>
+    <Grid RowDefinitions="*,Auto">
+        <CollectionView 
+                  VerticalOptions="Fill"
+                  ItemsSource="{Binding Items}"
+                  SelectionMode="Single"
+                  SelectionChanged="CollectionView_SelectionChanged">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:TodoItem">
+                    <Grid Padding="20"
+                          ColumnDefinitions="*,Auto"
+                          RowDefinitions="Auto,Auto">
+                        <Label Text="{Binding ProductName}"
+                               FontSize="Medium"
+                               Grid.Row="0"
+                               Grid.Column="0"/>
+                        <CheckBox x:Name="cbDone" Grid.RowSpan="2"
+                               Grid.Column="1"
+                               IsChecked="{Binding Done}"
+                                  CheckedChanged="cbDone_CheckedChanged"/>
+                        <HorizontalStackLayout Grid.Row="1"
+                                               Grid.ColumnSpan="2">
+                            <Label Text="{Binding Quantity}"
+                                   HorizontalTextAlignment="Center"/>
+                            <Label Text=" x "/>
+                            <Label Text="{Binding Price}"
+                                   HorizontalTextAlignment="Center"/>
+                            <Label Text=" = "/>
+                            <Label Text="{Binding Total}"
+                                   VerticalTextAlignment="Center"/>
+                        </HorizontalStackLayout>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <VerticalStackLayout Grid.Row="1"      
+                Margin="20">
+            <Label x:Name="LblTotal"
+                    FontSize="Small"/>
+            <Label x:Name="LblSubTtl"
+                   FontSize="Medium"/>
+            <Button Text="ADD" Clicked="OnItemAdded"/>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
