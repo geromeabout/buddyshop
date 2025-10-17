@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using SQLite;
-using static Android.Graphics.ColorSpace;
 
 namespace Todo
 {
@@ -24,28 +23,6 @@ namespace Todo
         {
             await Init();
             return await Database.Table<TodoItem>().OrderBy(d => d.Done).ToListAsync();
-        }
-
-        public async Task<TodoItem> ImportAsync(string filePath)
-        {
-            await Init();
-            // Get the file path
-            var file = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), filePath);
-
-            // Read the JSON string from the file
-            var json = await File.ReadAllTextAsync(file);
-
-            // Convert the JSON string back to a model
-            var model = JsonSerializer.Deserialize<TodoItem>(json);
-
-            return model;
-        }
-        public async Task ExportsAsync(List<TodoItem> todoItem, string filePath)
-        {
-            await Init();
-            var json = JsonConvert.SerializeObject(todoItem);
-            var file = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), filePath);
-            await File.WriteAllTextAsync(file, json);
         }
 
         public async Task<List<TodoItem>> GetItemsNotDoneAsync()

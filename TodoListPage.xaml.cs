@@ -79,7 +79,6 @@ public partial class TodoListPage : ContentPage
     private async void tiExport_Clicked(object sender, EventArgs e)
     {
         var items = await database.GetItemsAsync();
-        await database.ExportsAsync(items.ToList(), "exports.json");
         await Task.Delay(1000);
         await DisplayAlert("Information", "Exported Successfully", "Ok");
     }
